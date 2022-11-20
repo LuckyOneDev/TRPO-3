@@ -1,0 +1,16 @@
+﻿<Window x:Class="TRPO_3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRPO_3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="ToClientsButton" Content="Клиенты" HorizontalAlignment="Center" VerticalAlignment="Top" Height="36" Width="148" Click="ToClientsButton_Click" Margin="0,181,0,0"/>
+        <Button x:Name="ToAttorneysButton" Content="Адвокаты" HorizontalAlignment="Center" Margin="0,239,0,0" VerticalAlignment="Top" Height="36" Width="148" Click="ToAttorneysButton_Click"/>
+        <Button x:Name="ToCasesButton" Content="Текущие дела" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Height="36" Width="148" Click="ToCasesButton_Click"/>
+        <Button x:Name="ToCasesButton_Copy" Content="Архив дел" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Height="36" Width="148" Click="ToCasesButton_Click"/>
+
+    </Grid>
+</Window>
