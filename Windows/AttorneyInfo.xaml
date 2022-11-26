@@ -1,0 +1,18 @@
+﻿<Window x:Class="TRPO_3.Windows.AttorneyInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRPO_3.Windows"
+        mc:Ignorable="d"
+        Title="AttorneyInfo" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="MainDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="10,83,497,25" SelectionChanged="DataGrid_SelectionChanged"/>
+        <Label x:Name="ClientsLabel" Content="Клиенты:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ClientsLabel_Copy" Content="Адвокат:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="AttorneyName" Content="Адвокат" HorizontalAlignment="Left" Margin="71,17,0,0" VerticalAlignment="Top" Width="232"/>
+        <Label x:Name="ClientsLabel_Copy1" Content="Суммарная выручка:" HorizontalAlignment="Left" Margin="343,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="PayLabel" Content="1000 руб" HorizontalAlignment="Left" Margin="473,17,0,0" VerticalAlignment="Top" Width="236"/>
+
+    </Grid>
+</Window>

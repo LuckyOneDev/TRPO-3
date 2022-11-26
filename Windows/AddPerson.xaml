@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TRPO_3"
         mc:Ignorable="d"
-        Title="AddWindow" Height="294" Width="390">
-    <Grid Margin="0,0,0,2">
-        <TextBox x:Name="NameInput" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Width="186" Height="21"/>
-        <TextBox x:Name="SurnameInput" HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="Wrap" Text="Фамилия" VerticalAlignment="Top" Width="186" Height="21"/>
-        <TextBox x:Name="PatronymicInput" HorizontalAlignment="Left" Margin="9,80,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" Width="186" Height="21"/>
-        <Button x:Name="ConfirmButton" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,10,11" VerticalAlignment="Bottom" Height="30" Width="100" Click="ConfirmButton_Click"/>
+        Title="AddWindow" Height="240" Width="319">
+    <Grid Margin="0,0,0,4" HorizontalAlignment="Center" Width="319">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="NameInput" HorizontalAlignment="Left" Margin="90,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" Height="21"/>
+        <TextBox x:Name="SurnameInput" HorizontalAlignment="Left" Margin="90,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" Height="21"/>
+        <TextBox x:Name="PatronymicInput" HorizontalAlignment="Left" Margin="90,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" Height="21"/>
+        <Button x:Name="ConfirmButton" Content="Добавить" Margin="205,0,10,11" VerticalAlignment="Bottom" Height="30" Click="ConfirmButton_Click"/>
         <Button x:Name="CancelButton" Content="Отмена" HorizontalAlignment="Left" Margin="9,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100" Click="CancelButton_Click"/>
+        <Label Content="Имя:" Margin="12,10,271,0" VerticalAlignment="Top" RenderTransformOrigin="-0.189,0.502" Height="26"/>
+        <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="12,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.504,0.631" Height="26" Width="62"/>
+        <Label Content="Отчество:" HorizontalAlignment="Left" Margin="11,79,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.591,0.104" Height="26" Width="64"/>
     </Grid>
 </Window>

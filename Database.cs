@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.SqlTypes;
 
 namespace TRPO_3
 {
@@ -36,6 +35,14 @@ namespace TRPO_3
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Case>()
+                .Property(x => x.Archived)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<Case>()
+                .Property(x => x.Pay)
+                .HasDefaultValue(0);
+
             modelBuilder.Entity<Human>()
                 .Property(b => b.HumanId)
                 .IsRequired();
@@ -59,7 +66,7 @@ namespace TRPO_3
 
     public class Human
     {
-        public int HumanId;
+        public int HumanId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
@@ -69,7 +76,7 @@ namespace TRPO_3
 
     public class Attorney
     {
-        public int AttorneyId;
+        public int AttorneyId { get; set; }
 
         public Attorney()
         {
@@ -82,13 +89,13 @@ namespace TRPO_3
             HumanId = human.HumanId;
         }
 
-        public int HumanId;
+        public int HumanId { get; set; }
         public virtual Human Human { get; set; }
     }
 
     public class Client
     {
-        public int ClientId;
+        public int ClientId { get; set; }
         public Client()
         {
         }
@@ -99,16 +106,22 @@ namespace TRPO_3
             HumanId = human.HumanId;
         }
 
-        public int HumanId;
+        public int HumanId { get; set; }
         public virtual Human Human { get; set; }
     }
 
+    public class Article
+    {
+        public int ArticleId { get; set; }
+        public string Name { get; set; }
+        public int ExprectedPunishment { get; set; }
+    }
     public class Case
     {
-        public int CaseId;
-        public int AttorneyId;
-        public int ClientId;
-        public virtual Client Client { get; set; }
+        public int CaseId { get; set; }
+        public int AttorneyId { get; set; }
+        public int ClientId { get; set; }
+        public int ArticleId { get; set; }
 
         public Case()
         {
@@ -121,17 +134,20 @@ namespace TRPO_3
             ClientId = client.ClientId;
             AttorneyId = attorney.AttorneyId;
             Attorney = attorney;
-            Pay = new SqlMoney(pay);
+            Pay = pay;
             StartDate = DateTime.Parse(startDate);
             EndDate = DateTime.Parse(endDate);
             Comment = comment;
         }
 
         public virtual Attorney Attorney { get; set; }
-        public DateTime StartDate;
-        public DateTime EndDate;
-        public SqlMoney Pay;
-        public string Comment;
-        public bool Archived = false;
+        public virtual Article Article { get; set; }
+        public virtual Client Client { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int Pay { get; set; }
+        public string Comment { get; set; }
+
+        public bool Archived { get; set; }
     }
 }

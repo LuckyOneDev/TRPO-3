@@ -40,27 +40,27 @@ namespace TRPO_3.Windows
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             using var context = new AttorneyContext();
-            //try
-            //{
-            var attorney = context.Attorney.Attach(attorneys.Find(x => x.Human.FullName == AttorneyInput.Text));
-            var client = context.Client.Attach(clients.Find(x => x.Human.FullName == ClientInput.Text));
-            var myCase = new Case(
-                attorney.Entity,
-                client.Entity,
-                int.Parse(PayInput.Text),
-                StartDateInput.Text,
-                EndDateInput.Text,
-                new TextRange(DescriptionInput.Document.ContentStart, DescriptionInput.Document.ContentEnd).Text
-            );
+            try
+            {
+                var attorney = context.Attorney.Attach(attorneys.Find(x => x.Human.FullName == AttorneyInput.Text));
+                var client = context.Client.Attach(clients.Find(x => x.Human.FullName == ClientInput.Text));
+                var myCase = new Case(
+                    attorney.Entity,
+                    client.Entity,
+                    int.Parse(PayInput.Text),
+                    StartDateInput.Text,
+                    EndDateInput.Text,
+                    new TextRange(DescriptionInput.Document.ContentStart, DescriptionInput.Document.ContentEnd).Text
+                );
 
-            context.Case.Add(myCase);
-            context.SaveChanges();
+                context.Case.Add(myCase);
+                context.SaveChanges();
 
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //}
+            }
 
             this.Close();
 
