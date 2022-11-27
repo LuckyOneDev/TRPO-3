@@ -8,7 +8,8 @@ namespace TRPO_3
         Client,
         Attorney,
         Case,
-        Archive
+        Archive,
+        Article
     }
 
     public class AttorneyContext : DbContext
@@ -17,6 +18,7 @@ namespace TRPO_3
         public DbSet<Attorney> Attorney { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<Case> Case { get; set; }
+        public DbSet<Article> Article { get; set; }
 
         public string DbPath { get; }
 
@@ -35,14 +37,6 @@ namespace TRPO_3
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Case>()
-                .Property(x => x.Archived)
-                .HasDefaultValue(false);
-
-            modelBuilder.Entity<Case>()
-                .Property(x => x.Pay)
-                .HasDefaultValue(0);
-
             modelBuilder.Entity<Human>()
                 .Property(b => b.HumanId)
                 .IsRequired();
@@ -61,6 +55,30 @@ namespace TRPO_3
             modelBuilder.Entity<Case>()
                 .Property(b => b.CaseId)
                 .IsRequired();
+
+            modelBuilder.Entity<Case>()
+                .Property(b => b.AttorneyId)
+                .IsRequired();
+
+            modelBuilder.Entity<Case>()
+                .Property(b => b.ClientId)
+                .IsRequired();
+
+            modelBuilder.Entity<Case>()
+                .Property(b => b.ArticleId)
+                .IsRequired();
+
+            modelBuilder.Entity<Case>()
+                .Property(x => x.Archived)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<Case>()
+                .Property(x => x.Pay)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<Article>()
+                .Property(b => b.ArticleId)
+                .IsRequired();
         }
     }
 
@@ -71,7 +89,7 @@ namespace TRPO_3
         public string Surname { get; set; }
         public string Patronymic { get; set; }
 
-        public virtual string FullName => $"{Name} {Surname} {Patronymic}";
+        public virtual string FullName => $"{Name} {Patronymic} {Surname}";
     }
 
     public class Attorney
@@ -116,6 +134,7 @@ namespace TRPO_3
         public string Name { get; set; }
         public int ExprectedPunishment { get; set; }
     }
+
     public class Case
     {
         public int CaseId { get; set; }
@@ -123,31 +142,20 @@ namespace TRPO_3
         public int ClientId { get; set; }
         public int ArticleId { get; set; }
 
+        public int? FinalPunishment { get; set; }
+
         public Case()
         {
 
-        }
-
-        public Case(Attorney attorney, Client client, int pay, string startDate, string endDate, string comment = "")
-        {
-            Client = client;
-            ClientId = client.ClientId;
-            AttorneyId = attorney.AttorneyId;
-            Attorney = attorney;
-            Pay = pay;
-            StartDate = DateTime.Parse(startDate);
-            EndDate = DateTime.Parse(endDate);
-            Comment = comment;
         }
 
         public virtual Attorney Attorney { get; set; }
         public virtual Article Article { get; set; }
         public virtual Client Client { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public int Pay { get; set; }
         public string Comment { get; set; }
-
         public bool Archived { get; set; }
     }
 }

@@ -5,14 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TRPO_3.Windows"
         mc:Ignorable="d"
-        Title="AttorneyInfo" Height="450" Width="800">
+        Title="AttorneyInfo" Height="450" Width="904">
     <Grid>
-        <DataGrid x:Name="MainDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="10,83,497,25" SelectionChanged="DataGrid_SelectionChanged"/>
-        <Label x:Name="ClientsLabel" Content="Клиенты:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="ClientsLabel_Copy" Content="Адвокат:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="AttorneyName" Content="Адвокат" HorizontalAlignment="Left" Margin="71,17,0,0" VerticalAlignment="Top" Width="232"/>
-        <Label x:Name="ClientsLabel_Copy1" Content="Суммарная выручка:" HorizontalAlignment="Left" Margin="343,17,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="PayLabel" Content="1000 руб" HorizontalAlignment="Left" Margin="473,17,0,0" VerticalAlignment="Top" Width="236"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="451*"/>
+            <ColumnDefinition Width="453*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="ClientDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="10,138,31,25"/>
+        <Label x:Name="ClientsLabel" Content="Клиенты" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <Label x:Name="ClientsLabel_Copy" Content="Адвокат:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
+        <Label x:Name="AttorneyName" Content="Адвокат" HorizontalAlignment="Left" Margin="172,17,0,0" VerticalAlignment="Top" Width="212" Height="26"/>
+        <Label x:Name="ClientsLabel_Copy1" Content="Суммарная выручка:" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
+        <Label x:Name="PayLabel" Content="1000 руб" HorizontalAlignment="Left" Margin="172,43,0,0" VerticalAlignment="Top" Width="164" Height="26"/>
+        <CheckBox x:Name="ClientCheck" Content="Только закрытые" HorizontalAlignment="Right" Margin="0,113,31,0" VerticalAlignment="Top" Height="15" Width="130" IsChecked="True"/>
+        <DataGrid x:Name="CaseDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="43,141,35,22" Grid.Column="1"/>
+        <Label x:Name="ClientsLabel_Copy2" Content="Дела:" Margin="43,110,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" HorizontalAlignment="Left" Width="55"/>
+        <CheckBox x:Name="CaseCheck" Content="Только закрытые" Margin="0,113,35,0" VerticalAlignment="Top" Grid.Column="1" Height="15" HorizontalAlignment="Right" Width="136" IsChecked="True"/>
     </Grid>
 </Window>

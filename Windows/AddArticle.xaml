@@ -1,0 +1,21 @@
+﻿<Window x:Class="TRPO_3.Windows.AddArticle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRPO_3"
+        mc:Ignorable="d"
+        Title="AddWindow" Height="152" Width="394">
+    <Grid Margin="0,0,0,4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="ArticleNameInput" HorizontalAlignment="Left" Margin="125,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="21"/>
+        <TextBox x:Name="ExprectedPunishmentInput" HorizontalAlignment="Left" Margin="125,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Height="21"/>
+        <Button x:Name="ConfirmButton" Content="Добавить" Margin="0,0,10,10" VerticalAlignment="Bottom" Height="30" Click="ConfirmButton_Click" HorizontalAlignment="Right" Width="102"/>
+        <Button x:Name="CancelButton" Content="Отмена" HorizontalAlignment="Left" Margin="9,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100" Click="CancelButton_Click"/>
+        <Label Content="Название&#xD;&#xA;" Margin="12,10,274,0" VerticalAlignment="Top" RenderTransformOrigin="-0.189,0.502" Height="26"/>
+        <Label Content="Ожидаемый срок" HorizontalAlignment="Left" Margin="12,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="26" Width="108"/>
+        <Label Content="лет" HorizontalAlignment="Left" Margin="217,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="26" Width="108"/>
+    </Grid>
+</Window>

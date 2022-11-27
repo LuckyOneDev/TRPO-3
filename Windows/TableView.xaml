@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="ClientsWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="MainDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="10,40,10,10" SelectionChanged="DataGrid_SelectionChanged"/>
+        <DataGrid Name="MainDataGrid" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="10,40,10,10"/>
         <Button x:Name="AddButton" Content="Добавить" HorizontalAlignment="Left" Margin="12,9,0,0" VerticalAlignment="Top" Height="25" Width="92" Click="AddButton_Click_1"/>
         <Button x:Name="ReloadButton" Content="Обновить" HorizontalAlignment="Right" Margin="0,9,15,0" VerticalAlignment="Top" Height="25" Width="90" Click="ReloadButton_Click"/>
         <Button x:Name="EditButton" Content="Изменить" HorizontalAlignment="Left" Margin="136,9,0,0" VerticalAlignment="Top" Height="25" Width="90" Click="EditButton_Click"/>
-        <Button x:Name="InfoButton" Content="Доп. Информация" HorizontalAlignment="Left" Margin="585,9,0,0" VerticalAlignment="Top" Height="25" Width="90" Click="InfoButton_Click"/>
+        <Button x:Name="InfoButton" Content="Доп. Информация" HorizontalAlignment="Right" Margin="0,9,124,0" VerticalAlignment="Top" Height="25" Width="122" Click="InfoButton_Click"/>
         <Button x:Name="DeleteButton" Content="Удалить" HorizontalAlignment="Left" Margin="264,9,0,0" VerticalAlignment="Top" Height="25" Width="90" Click="DeleteButton_Click"/>
 
     </Grid>

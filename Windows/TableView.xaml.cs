@@ -46,11 +46,6 @@ namespace TRPO_3
             Reload();
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void AddButton_Click_1(object sender, RoutedEventArgs e)
         {
             switch (rootSchema)
@@ -72,23 +67,16 @@ namespace TRPO_3
                         Reload();
                     };
                     break;
-                case TableType.Archive:
+                case TableType.Article:
+                    AddArticle addArticleWindow = new AddArticle();
+                    addArticleWindow.Show();
+                    addArticleWindow.Closing += (object? sender, CancelEventArgs e) =>
+                    {
+                        Reload();
+                    };
                     break;
             }
 
-        }
-
-        private void GenerateDataGridColumns(DataGrid dg, Dictionary<string, string> map)
-        {
-            MainDataGrid.AutoGenerateColumns = false;
-            dg.Columns.Clear();
-            foreach (var item in map)
-            {
-                DataGridTextColumn textColumn = new DataGridTextColumn();
-                textColumn.Header = item.Key;
-                textColumn.Binding = new Binding(item.Value);
-                dg.Columns.Add(textColumn);
-            }
         }
 
         private void Reload()
@@ -96,67 +84,58 @@ namespace TRPO_3
             MainDataGrid.Items.Clear();
             MainDataGrid.IsReadOnly = true;
             using var db = new AttorneyContext();
+
             switch (rootSchema)
             {
                 case TableType.Attorney:
-                    GenerateDataGridColumns(MainDataGrid, new Dictionary<string, string>()
+                    DataGridHelper.FillDataGrid(MainDataGrid, new Dictionary<string, string>()
                     {
                         { "Id", "AttorneyId" },
                         { "Полное имя", "Human.FullName" }
-                    });
-
-                    db.Attorney.Include(x => x.Human).ToList().ForEach(x =>
-                    {
-                        MainDataGrid.Items.Add(x);
-                    });
+                    }, db.Attorney.Include(x => x.Human));
                     break;
                 case TableType.Client:
                     InfoButton.Visibility = Visibility.Hidden;
-                    GenerateDataGridColumns(MainDataGrid, new Dictionary<string, string>()
+                    DataGridHelper.FillDataGrid(MainDataGrid, new Dictionary<string, string>()
                     {
                         { "Id", "ClientId" },
                         { "Полное имя", "Human.FullName" }
-                    });
-
-                    db.Client.Include(x => x.Human).ToList().ForEach(x =>
-                    {
-                        MainDataGrid.Items.Add(x);
-                    });
-
+                    }, db.Client.Include(x => x.Human));
                     break;
                 case TableType.Case:
-                    GenerateDataGridColumns(MainDataGrid, new Dictionary<string, string>()
+                    InfoButton.Content = "Закрыть дело";
+                    DataGridHelper.FillDataGrid(MainDataGrid, new Dictionary<string, string>()
                     {
                         { "Клиент", "Client.Human.FullName" },
                         { "Адвокат", "Attorney.Human.FullName" },
                         { "Плата", "Pay" },
-                    });
-
-                    db.Case
-                        .Include(x => x.Attorney.Human)
-                        .Include(x => x.Client.Human).Where(x => x.Archived == false).ToList()
-                        .ForEach(x =>
-                        {
-                            MainDataGrid.Items.Add(x);
-                        });
-                    InfoButton.Visibility = Visibility.Hidden;
+                        { "Статья", "Article.Name" },
+                        { "Ожидаемый срок", "Article.ExprectedPunishment" }
+                    }, db.Case.Include(x => x.Attorney.Human).Include(x => x.Client.Human).Include(x => x.Article).Where(x => x.Archived == false));
                     break;
                 case TableType.Archive:
-                    GenerateDataGridColumns(MainDataGrid, new Dictionary<string, string>()
+                    InfoButton.Visibility = Visibility.Hidden;
+                    AddButton.IsEnabled = false;
+                    EditButton.IsEnabled = false;
+                    DataGridHelper.FillDataGrid(MainDataGrid, new Dictionary<string, string>()
                     {
                         { "Клиент", "Client.Human.FullName" },
                         { "Адвокат", "Attorney.Human.FullName" },
                         { "Плата", "Pay" },
-                    });
-
-                    db.Case
-                        .Include(x => x.Attorney.Human)
-                        .Include(x => x.Client.Human).Where(x => x.Archived == true).ToList()
-                        .ForEach(x =>
-                        {
-                            MainDataGrid.Items.Add(x);
-                        });
+                        { "Статья", "Article.Name" },
+                        { "Ожидаемый срок", "Article.ExprectedPunishment" },
+                        { "Итоговый срок", "FinalPunishment" }
+                    }, db.Case.Include(x => x.Attorney.Human).Include(x => x.Client.Human).Include(x => x.Article).Where(x => x.Archived == true));
+                    break;
+                case TableType.Article:
                     InfoButton.Visibility = Visibility.Hidden;
+                    EditButton.IsEnabled = false;
+                    DataGridHelper.FillDataGrid(MainDataGrid, new Dictionary<string, string>()
+                    {
+                        { "Id", "ArticleId" },
+                        { "Название", "Name" },
+                        { "Ожидаемый срок", "ExprectedPunishment" }
+                    }, db.Article);
                     break;
             }
         }
@@ -168,10 +147,28 @@ namespace TRPO_3
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MainDataGrid.SelectedItem != null)
+            switch (rootSchema)
             {
-                AttorneyInfo info = new AttorneyInfo(MainDataGrid.SelectedItem as Attorney);
-                info.Show();
+                case TableType.Attorney:
+                    if (MainDataGrid.SelectedItem != null)
+                    {
+                        AttorneyInfo info = new AttorneyInfo(MainDataGrid.SelectedItem as Attorney);
+                        info.Show();
+                    }
+                    break;
+                case TableType.Case:
+                    if (MainDataGrid.SelectedItem != null)
+                    {
+                        CloseCase cc = new CloseCase(MainDataGrid.SelectedItem as Case);
+                        cc.Show();
+                        cc.Closing += (object? sender, CancelEventArgs e) =>
+                        {
+                            Reload();
+                        };
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -194,6 +191,10 @@ namespace TRPO_3
                     case TableType.Case:
                     case TableType.Archive:
                         db.Case.RemoveRange(db.Case.Where(x => x == MainDataGrid.SelectedItem));
+                        db.SaveChanges();
+                        break;
+                    case TableType.Article:
+                        db.Article.RemoveRange(db.Article.Where(x => x == MainDataGrid.SelectedItem));
                         db.SaveChanges();
                         break;
                 }
